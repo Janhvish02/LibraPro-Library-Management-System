@@ -1,0 +1,157 @@
+
+{% extends "base.html" %}
+
+{% block title %}Dashboard | LibraPro{% endblock %}
+
+{% block page_heading %}Library Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+.dashboard-welcome {
+    background: linear-gradient(120deg, #253b80, #4776c5);
+    color: white;
+    padding: 26px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+}
+
+.dashboard-welcome h2 {
+    margin: 0 0 8px;
+    font-size: 25px;
+}
+
+.dashboard-welcome p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: white;
+    padding: 23px;
+    border-radius: 14px;
+    border: 1px solid #e6eaf2;
+    box-shadow: 0 4px 14px rgba(30, 50, 90, 0.05);
+}
+
+.stat-card .stat-icon {
+    font-size: 27px;
+    margin-bottom: 15px;
+}
+
+.stat-card p {
+    color: #697386;
+    margin: 0 0 10px;
+    font-size: 14px;
+}
+
+.stat-card h2 {
+    margin: 0;
+    font-size: 30px;
+    color: #24345b;
+}
+
+.dashboard-section {
+    background: white;
+    padding: 24px;
+    border: 1px solid #e6eaf2;
+    border-radius: 14px;
+}
+
+.dashboard-section h3 {
+    margin-top: 0;
+    color: #26334d;
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.action-link {
+    display: block;
+    text-decoration: none;
+    color: #294b91;
+    background: #f3f6fc;
+    padding: 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: 1px solid #e3eafa;
+}
+
+.action-link:hover {
+    background: #e8efff;
+}
+
+@media (max-width: 700px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="dashboard-welcome">
+    <h2>Welcome to LibraPro! 📚</h2>
+    <p>Manage your books and keep your library organized.</p>
+</div>
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <p>Total Book Titles</p>
+        <h2>{{ total_books }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">📖</div>
+        <p>Available Book Copies</p>
+        <h2>{{ total_quantity }}</h2>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon">⚠️</div>
+        <p>Low-Stock Titles</p>
+        <h2>{{ low_stock }}</h2>
+    </div>
+
+</div>
+
+<div class="dashboard-section">
+    <h3>Quick Actions</h3>
+    <p style="color:#697386;">
+        Choose an action to manage your library.
+    </p>
+
+    <div class="quick-actions">
+        <a href="/add" class="action-link">
+            ➕ Add a New Book
+        </a>
+
+        <a href="/view" class="action-link">
+            📚 View All Books
+        </a>
+
+        <a href="/students" class="action-link">
+            👨‍🎓 Manage Students
+        </a>
+
+        <a href="/add_student" class="action-link">
+            ➕ Register a Student
+        </a>
+    </div>
+</div>
+
+{% endblock %}

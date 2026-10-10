@@ -1,0 +1,164 @@
+
+{% extends "base.html" %}
+
+{% block title %}Issued Records | LibraPro{% endblock %}
+{% block page_heading %}Issued Books & Returns{% endblock %}
+
+{% block content %}
+<style>
+.records-card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    overflow-x: auto;
+}
+
+.records-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.records-table th,
+.records-table td {
+    text-align: left;
+    padding: 13px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+.records-table th {
+    background: #f3f6fc;
+    color: #334155;
+}
+
+.status-issued {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.status-overdue {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+.status-returned {
+    color: #15803d;
+    font-weight: 600;
+}
+
+.fine-amount {
+    color: #dc2626;
+    font-weight: 700;
+}
+
+.return-button,
+.new-issue {
+    background: #3158a6;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 9px 13px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.new-issue {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 11px 16px;
+}
+
+.return-button:hover,
+.new-issue:hover {
+    background: #243f7c;
+}
+
+.fine-summary {
+    margin-top: 22px;
+    padding: 18px;
+    background: #f3f6fc;
+    border-radius: 10px;
+}
+
+.fine-summary h3 {
+    margin: 0;
+    color: #294b91;
+}
+</style>
+
+<div class="records-card">
+    <h2>Book Issue Records 📚</h2>
+    <p>Track issued books, due dates, late days and return fines.</p>
+    <p><strong>Fine rate:</strong> ₹5 per late day</p>
+
+    <a href="/issue-books" class="new-issue">+ Issue New Book</a>
+
+    <table class="records-table">
+        <thead>
+            <tr>
+                <th>Book Name</th>
+                <th>Student</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Late Days</th>
+                <th>Fine (₹)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record["book_name"] }}</td>
+                <td>{{ record["student_name"] }}</td>
+                <td>{{ record["issue_date"] }}</td>
+                <td>{{ record["due_date"] }}</td>
+
+                <td>
+                    {% if record["status"] == "Returned" %}
+                        <span class="status-returned">Returned</span>
+                    {% elif record["due_date"] < today_date %}
+                        <span class="status-overdue">Overdue</span>
+                    {% else %}
+                        <span class="status-issued">Issued</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ record["late_days"] }}</td>
+
+                <td class="fine-amount">
+                    ₹{{ record["fine"] }}
+                </td>
+
+                <td>
+                    {% if record["status"] == "Issued" %}
+                    <form method="POST"
+                          action="/return-issued/{{ record['id'] }}"
+                          onsubmit="return confirm('Confirm book return?');">
+                        <button type="submit" class="return-button">
+                            Return Book
+                        </button>
+                    </form>
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+            </tr>
+
+            {% else %}
+            <tr>
+                <td colspan="8">No issue records found yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="fine-summary">
+        <h3>Total Calculated Fine: ₹{{ total_fine }}</h3>
+        <p>Fine is calculated at ₹5 per day after the due date.</p>
+    </div>
+</div>
+{% endblock %}

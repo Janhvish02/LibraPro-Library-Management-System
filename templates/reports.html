@@ -1,0 +1,100 @@
+
+{% extends "base.html" %}
+
+{% block title %}Library Reports | LibraPro{% endblock %}
+{% block page_heading %}Library Reports{% endblock %}
+
+{% block content %}
+<style>
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.report-card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+}
+
+.report-card p {
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.report-card h2 {
+    color: #294b91;
+    font-size: 30px;
+    margin: 0;
+}
+
+.report-card .fine-value {
+    color: #dc2626;
+}
+
+.report-note {
+    margin-top: 24px;
+    padding: 20px;
+    background: #f3f6fc;
+    border-radius: 12px;
+}
+
+.report-note a {
+    color: #294b91;
+    font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    .report-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="report-grid">
+
+    <div class="report-card">
+        <p>📚 Total Book Titles</p>
+        <h2>{{ total_books }}</h2>
+    </div>
+
+    <div class="report-card">
+        <p>📖 Available Book Copies</p>
+        <h2>{{ total_quantity }}</h2>
+    </div>
+
+    <div class="report-card">
+        <p>👨‍🎓 Registered Students</p>
+        <h2>{{ total_students }}</h2>
+    </div>
+
+    <div class="report-card">
+        <p>🔄 Currently Issued Books</p>
+        <h2>{{ total_issued }}</h2>
+    </div>
+
+    <div class="report-card">
+        <p>⚠️ Overdue Books</p>
+        <h2>{{ overdue_books }}</h2>
+    </div>
+
+    <div class="report-card">
+        <p>💰 Total Calculated Fine</p>
+        <h2 class="fine-value">₹{{ total_fine }}</h2>
+    </div>
+
+</div>
+
+<div class="report-note">
+    <h3>Library Summary</h3>
+    <p>
+        Monitor book inventory, registered students, overdue books
+        and calculated late-return fines.
+    </p>
+    <p>Fine rate: ₹5 per late day.</p>
+    <a href="/issued-books">View Issue and Return Records →</a>
+</div>
+
+{% endblock %}

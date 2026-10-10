@@ -1,0 +1,119 @@
+
+{% extends "base.html" %}
+
+{% block title %}Issue Book | LibraPro{% endblock %}
+{% block page_heading %}Issue a Book{% endblock %}
+
+{% block content %}
+
+<style>
+.issue-card {
+    max-width: 650px;
+    padding: 28px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+}
+
+.issue-card label {
+    display: block;
+    margin: 18px 0 7px;
+    font-weight: 600;
+}
+
+.issue-card select,
+.issue-card input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+}
+
+.issue-card button {
+    margin-top: 24px;
+    padding: 12px 20px;
+    background: #3158a6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.issue-card a {
+    color: #3158a6;
+}
+</style>
+
+<div class="issue-card">
+    <h2>Issue Book to Student 📚</h2>
+    <p>Select the book, student and due date.</p>
+
+    {% if not books %}
+        <p>No available books. Please add a book first.</p>
+    {% endif %}
+
+    {% if not students %}
+        <p>No students found. Please register a student first.</p>
+    {% endif %}
+
+    {% if books and students %}
+    <form method="POST">
+
+        <label for="book_id">Select Book</label>
+        <select name="book_id" id="book_id" required>
+            {% for book in books %}
+            <option value="{{ book[0] }}">
+                {{ book[1] }} — {{ book[2] }}
+                (Available: {{ book[3] }})
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="student_id">Select Student</label>
+        <select name="student_id" id="student_id" required>
+            {% for student in students %}
+            <option value="{{ student[0] }}">
+                {{ student[1] }} — {{ student[2] }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="issue_date">Issue Date</label>
+        <input type="date" name="issue_date"
+               id="issue_date" required>
+
+        <label for="due_date">Due Date</label>
+        <input type="date" name="due_date"
+               id="due_date" required>
+
+        <button type="submit">Confirm Issue</button>
+    </form>
+    {% endif %}
+
+    <p><a href="/issued-books">View Issue Records</a></p>
+</div>
+
+<script>
+const issue = document.getElementById("issue_date");
+const due = document.getElementById("due_date");
+
+const now = new Date();
+const today = new Date(
+    now.getTime() - now.getTimezoneOffset() * 60000
+).toISOString().slice(0, 10);
+
+issue.value = today;
+issue.min = today;
+due.min = today;
+
+issue.addEventListener("change", function () {
+    due.min = issue.value;
+
+    if (due.value && due.value < issue.value) {
+        due.value = issue.value;
+    }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Add Student - LibraPro{% endblock %}
+
+{% block page_heading %}
+Add Student
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h2>👨‍🎓 Add New Student</h2>
+        <p>Register a student in the library system.</p>
+    </div>
+
+    <a href="/students" class="secondary-btn">
+        👨‍🎓 View Students
+    </a>
+
+</div>
+
+
+<div class="form-card">
+
+    <div class="form-header">
+
+        <div class="form-icon">
+            👨‍🎓
+        </div>
+
+        <div>
+            <h2>Student Information</h2>
+            <p>Enter the student's details below.</p>
+        </div>
+
+    </div>
+
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label for="student_name">
+                    Student Name
+                </label>
+
+                <input
+                    type="text"
+                    id="student_name"
+                    name="student_name"
+                    placeholder="Enter student name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter email address"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="course">
+                    Course
+                </label>
+
+                <input
+                    type="text"
+                    id="course"
+                    name="course"
+                    placeholder="e.g. B.Tech CSE"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a href="/students" class="secondary-btn">
+                Cancel
+            </a>
+
+            <button type="submit" class="primary-btn">
+                ➕ Add Student
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

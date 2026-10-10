@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Student - LibraPro{% endblock %}
+
+{% block page_heading %}
+Edit Student
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h2>✏️ Edit Student</h2>
+        <p>Update the student's information.</p>
+    </div>
+
+    <a href="/students" class="secondary-btn">
+        👨‍🎓 Back to Students
+    </a>
+
+</div>
+
+
+<div class="form-card">
+
+    <div class="form-header">
+
+        <div class="form-icon">
+            👨‍🎓
+        </div>
+
+        <div>
+            <h2>Student Information</h2>
+            <p>Update the details and save your changes.</p>
+        </div>
+
+    </div>
+
+
+    <form method="POST">
+
+        <div class="form-grid">
+
+            <div class="form-group">
+
+                <label for="student_name">
+                    Student Name
+                </label>
+
+                <input
+                    type="text"
+                    id="student_name"
+                    name="student_name"
+                    value="{{ student[1] }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="{{ student[2] }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="course">
+                    Course
+                </label>
+
+                <input
+                    type="text"
+                    id="course"
+                    name="course"
+                    value="{{ student[3] }}"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="form-actions">
+
+            <a href="/students" class="secondary-btn">
+                Cancel
+            </a>
+
+            <button type="submit" class="primary-btn">
+                💾 Save Changes
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
